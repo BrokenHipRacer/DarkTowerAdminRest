@@ -4,7 +4,7 @@ const moment = require("moment")
 
 const utils = require("../../utils")
 
-const assetsDirPath = path.join(__dirname, "..", "..", "..", "..", "..", "assets")
+const assetsDirPath = path.join(__dirname, "..", "..", "..", "..", "assets")
 
 module.exports = {
     checkIfImageFilenameExists: function(filename, callback) {
