@@ -45,10 +45,10 @@ app.use(bodyParser.urlencoded({ extended: false, limit: "50mb" }))
 
 app.use(cookieParser())
 
-app.use(require("./routes/admin-user/index"))
-app.use(require("./routes/blog-posts/index"))
-app.use(require("./routes/images/index"))
-app.use(require("./routes/sitemap/index"))
+app.use(require("./src/routes/admin-user/index"))
+app.use(require("./src/routes/blog-posts/index"))
+app.use(require("./src/routes/images/index"))
+app.use(require("./src/routes/sitemap/index"))
 
 app.listen(PORT, function () {
     console.log(`Express app listening on port ${PORT}`)

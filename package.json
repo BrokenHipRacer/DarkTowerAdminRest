@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint ./src --fix",
     "dev": "NODE_ENV=development nodemon index.js",
     "start": "NODE_ENV=production node index.js"
   },
@@ -28,6 +29,8 @@
     "xml-formatter": "^2.6.1"
   },
   "devDependencies": {
+    "eslint": "^8.23.1",
+    "eslint-config-google": "^0.14.0",
     "nodemon": "^2.0.19"
   }
 }
