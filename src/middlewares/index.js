@@ -13,7 +13,7 @@ module.exports = {
     } else {
       adminUsersApi.authenticateAdminUser(authUserId, authToken, function(apiResponse) {
         res.locals.authUserId = apiResponse.success ? authUserId : null;
-        res.locals.authSuccess = apiResponse.success ? true : false;
+        res.locals.authSuccess = !!apiResponse.success;
         next();
       });
     }
