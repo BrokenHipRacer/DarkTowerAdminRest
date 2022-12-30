@@ -1,26 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose")
 
 const BlogPostSchema = new mongoose.Schema({
   id: {
     type: String,
-    unique: true,
+    unique: true
   },
   title: {
     type: String,
-    unique: true,
+    unique: true
   },
   urlTitle: {
     type: String,
-    unique: true,
+    unique: true
   },
   dateTimestamp: Number,
   tags: Array,
   thumbnailImageUrl: String,
   markdownContent: String,
   seoTitleTag: String,
-  seoMetaDescription: String,
-}, {collection: 'posts'});
+  seoMetaDescription: String
+}, {collection: "posts"})
 
-BlogPostSchema.index({id: -1, urlTitle: 1});
+BlogPostSchema.index({id: -1, urlTitle: 1})
 
-module.exports = mongoose.model('Post', BlogPostSchema);
+module.exports = mongoose.model("Post", BlogPostSchema)

@@ -4,33 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./src --fix",
     "dev": "NODE_ENV=development nodemon index.js",
     "start": "NODE_ENV=production node index.js"
   },
   "keywords": [],
-  "author": "BrokenHipRacer andrew@alsberge.email",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.20.0",
-    "cookie-parser": "^1.4.6",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "helmet": "^5.1.1",
-    "moment": "^2.29.4",
-    "mongoose": "^6.5.2",
-    "multer": "^1.4.5-lts.1",
-    "node-cmd": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "moment": "^2.25.3",
+    "mongoose": "^5.9.15",
+    "multer": "^1.4.2",
+    "node-cmd": "^3.0.0",
+    "randomstring": "^1.1.5",
     "tldjs": "^2.3.1",
-    "uuid": "^9.0.0",
-    "xml-formatter": "^2.6.1"
+    "xml-formatter": "^2.0.1"
   },
   "devDependencies": {
-    "eslint": "^8.23.1",
-    "eslint-config-google": "^0.14.0",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.4"
   }
 }
