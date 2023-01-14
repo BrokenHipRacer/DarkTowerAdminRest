@@ -6,11 +6,11 @@ const authAdminUser = require("../../middlewares/index.js").authAdminUser
 
 const app = express.Router()
 
-app.put("/sitemap/update-xml-file", authAdminUser, (req, res) => {
+app.put("/sitemap/ping-search-engines", authAdminUser, (req, res) => {
   if (!res.locals.authSuccess) {
     res.json({authSuccess: false})
   } else {
-    api.updateSitemapXmlFile(function(apiResponse) {
+    api.pingSearchEngines(function(apiResponse) {
       apiResponse.authSuccess = true
       res.json(apiResponse)
     })
@@ -28,11 +28,11 @@ app.put("/sitemap/restart-frontend-website-pm2-process", authAdminUser, (req, re
   }
 })
 
-app.put("/sitemap/ping-search-engines", authAdminUser, (req, res) => {
+app.put("/sitemap/update-xml-file", authAdminUser, (req, res) => {
   if (!res.locals.authSuccess) {
     res.json({authSuccess: false})
   } else {
-    api.pingSearchEngines(function(apiResponse) {
+    api.updateSitemapXmlFile(function(apiResponse) {
       apiResponse.authSuccess = true
       res.json(apiResponse)
     })

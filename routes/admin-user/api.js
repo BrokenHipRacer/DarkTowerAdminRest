@@ -4,6 +4,62 @@ const randomstring = require("randomstring")
 const AdminUserModel = require("../../models/admin-user.js")
 
 module.exports = {
+  authenticateAdminUser: function(userId, authToken, callback) {
+    AdminUserModel.findOne({id: userId}).exec(function(error, user) {
+      if (error || !user || authToken !== user.authToken || moment().unix() > user.authTokenExpiresTimestamp) {
+        callback({success: false})
+      } else {
+        callback({success: true})
+      }
+    })
+  },
+
+  changeAdminUserPassword: function(userId, currentPassword, newPassword, callback) {
+    AdminUserModel.findOne({id: userId}).exec(function(error, user) {
+      if (error || !user) {
+        callback({submitError: true})
+      } else {
+        user.comparePassword(currentPassword, function(matchError, isMatch) {
+          if (matchError) {
+            callback({submitError: true})
+          } else if (!isMatch) {
+            callback({invalidPasswordCredentialError: true})
+          } else {
+            user.password = newPassword
+
+            user.save(function(saveError) {
+              if (saveError) {
+                callback({submitError: true})
+              } else {
+                callback({success: true})
+              }
+            })
+          }
+        })
+      }
+    })
+  },
+
+  /*
+  createNewAdminUser: function(email, password, callback) {
+    const newAdminUser = new AdminUserModel({
+      id: randomstring.generate(20),
+      email: email,
+      password: password,
+      authToken: randomstring.generate(40),
+      authTokenExpiresTimestamp: moment().unix() + (86400 * 3)
+    })
+
+    newAdminUser.save(function(newDocError, newDoc) {
+      if (newDocError) {
+        callback({success: false})
+      } else {
+        callback({success: true})
+      }
+    })
+  }
+  */
+
   loginAdminUser: function(email, password, callback) {
     AdminUserModel.findOne({email: email}).exec(function(error, user) {
       if (error || !user) {
@@ -31,15 +87,7 @@ module.exports = {
       }
     })
   },
-  authenticateAdminUser: function(userId, authToken, callback) {
-    AdminUserModel.findOne({id: userId}).exec(function(error, user) {
-      if (error || !user || authToken !== user.authToken || moment().unix() > user.authTokenExpiresTimestamp) {
-        callback({success: false})
-      } else {
-        callback({success: true})
-      }
-    })
-  },
+
   removeAdminUserAuthToken: function(userId, callback) {
     AdminUserModel.findOne({id: userId}).exec(function(error, user) {
       if (error || !user) {
@@ -57,49 +105,5 @@ module.exports = {
         })
       }
     })
-  },
-  changeAdminUserPassword: function(userId, currentPassword, newPassword, callback) {
-    AdminUserModel.findOne({id: userId}).exec(function(error, user) {
-      if (error || !user) {
-        callback({submitError: true})
-      } else {
-        user.comparePassword(currentPassword, function(matchError, isMatch) {
-          if (matchError) {
-            callback({submitError: true})
-          } else if (!isMatch) {
-            callback({invalidPasswordCredentialError: true})
-          } else {
-            user.password = newPassword
-
-            user.save(function(saveError) {
-              if (saveError) {
-                callback({submitError: true})
-              } else {
-                callback({success: true})
-              }
-            })
-          }
-        })
-      }
-    })
-  },
-  /*
-  createNewAdminUser: function(email, password, callback) {
-    const newAdminUser = new AdminUserModel({
-      id: randomstring.generate(20),
-      email: email,
-      password: password,
-      authToken: randomstring.generate(40),
-      authTokenExpiresTimestamp: moment().unix() + (86400 * 3)
-    })
-
-    newAdminUser.save(function(newDocError, newDoc) {
-      if (newDocError) {
-        callback({success: false})
-      } else {
-        callback({success: true})
-      }
-    })
   }
-  */
 }

@@ -15,6 +15,23 @@ const storage = multer.diskStorage({
   }
 })
 
+app.get("/images/check-if-filename-exists", (req, res) => {
+  api.checkIfImageFilenameExists(req.query.filename, function(response) {
+    res.json(response)
+  })
+})
+
+app.put("/images/delete-image", authAdminUser, (req, res) => {
+  if (!res.locals.authSuccess) {
+    res.json({authSuccess: false})
+  } else {
+    api.deleteImageByFilename(req.body.filename, function(response) {
+      response.authSuccess = true
+      res.json(response)
+    })
+  }
+})
+
 app.get("/images/get-all-images", authAdminUser, (req, res) => {
   if (!res.locals.authSuccess) {
     res.json({authSuccess: false})
@@ -24,33 +41,6 @@ app.get("/images/get-all-images", authAdminUser, (req, res) => {
       res.json(response)
     })
   }
-})
-
-app.post("/images/upload", authAdminUser, (req, res) => {
-  if (!res.locals.authSuccess) {
-    res.json({authSuccess: false})
-  } else {
-    let upload = multer({storage: storage}).single("selectedFile")
-
-    upload(req, res, function(error) {
-      if (!req.file) {
-        res.json({authSuccess: true, noFileError: true})
-      } else if (error) {
-        res.json({authSuccess: true, submitError: true})
-      } else {
-        res.json({
-          authSuccess: true,
-          success: true
-        })
-      }
-    })
-  }
-})
-
-app.get("/images/check-if-filename-exists", (req, res) => {
-  api.checkIfImageFilenameExists(req.query.filename, function(response) {
-    res.json(response)
-  })
 })
 
 app.get("/images/get-image-by-filename", authAdminUser, (req, res) => {
@@ -75,13 +65,23 @@ app.put("/images/update-image-filename", authAdminUser, (req, res) => {
   }
 })
 
-app.put("/images/delete-image", authAdminUser, (req, res) => {
+app.post("/images/upload", authAdminUser, (req, res) => {
   if (!res.locals.authSuccess) {
     res.json({authSuccess: false})
   } else {
-    api.deleteImageByFilename(req.body.filename, function(response) {
-      response.authSuccess = true
-      res.json(response)
+    let upload = multer({storage: storage}).single("selectedFile")
+
+    upload(req, res, function(error) {
+      if (!req.file) {
+        res.json({authSuccess: true, noFileError: true})
+      } else if (error) {
+        res.json({authSuccess: true, submitError: true})
+      } else {
+        res.json({
+          authSuccess: true,
+          success: true
+        })
+      }
     })
   }
 })
